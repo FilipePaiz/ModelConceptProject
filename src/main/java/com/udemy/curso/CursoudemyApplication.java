@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.udemy.curso.daos.AddressDAO;
 import com.udemy.curso.daos.CategoryDAO;
 import com.udemy.curso.daos.CityDAO;
+import com.udemy.curso.daos.ClientDAO;
 import com.udemy.curso.daos.ProductDAO;
 import com.udemy.curso.daos.StateDAO;
+import com.udemy.curso.daos.enums.ClientType;
+import com.udemy.curso.domain.Address;
 import com.udemy.curso.domain.Category;
 import com.udemy.curso.domain.City;
+import com.udemy.curso.domain.Client;
 import com.udemy.curso.domain.Product;
 import com.udemy.curso.domain.State;
 
@@ -27,6 +32,10 @@ public class CursoudemyApplication implements CommandLineRunner {
 	private StateDAO stateDao;	
 	@Autowired
 	private CityDAO cityDao;
+	@Autowired
+	private ClientDAO clientDao;
+	@Autowired
+	private AddressDAO addressDao;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursoudemyApplication.class, args);
@@ -64,6 +73,17 @@ public class CursoudemyApplication implements CommandLineRunner {
 		
 		stateDao.saveAll(Arrays.asList(st1, st2));
 		cityDao.saveAll(Arrays.asList(c1, c2, c3));
+		
+		Client cli1 = new Client(null, "André", "andre@gmail.com", "123456789", ClientType.INDIVIDUALPERSON);
+		cli1.getPhone().addAll(Arrays.asList("147882369", "963852741"));
+		
+		Address ad1 = new Address(null, "Eevee Street", "300", "Ap 303", "Garden", "1345678", cli1, c1);
+		Address ad2 = new Address(null, "Kel Street", "105", "Ap 800", "Center", "741852", cli1, c2);
+		
+		cli1.getAddresses().addAll(Arrays.asList(ad1, ad2));
+		
+		clientDao.saveAll(Arrays.asList(cli1));
+		addressDao.saveAll(Arrays.asList(ad1, ad2));
 		
 	}
 
