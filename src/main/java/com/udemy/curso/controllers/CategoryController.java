@@ -1,4 +1,4 @@
-package com.udemy.curso.resources;
+package com.udemy.curso.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import com.udemy.curso.services.CategoryService;
 
 @RestController
 @RequestMapping(value="/categories")
-public class CategoryResource {
+public class CategoryController {
 
 	@Autowired
 	private CategoryService service;
