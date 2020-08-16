@@ -1,5 +1,6 @@
 package com.udemy.curso;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,21 @@ import com.udemy.curso.daos.AddressDAO;
 import com.udemy.curso.daos.CategoryDAO;
 import com.udemy.curso.daos.CityDAO;
 import com.udemy.curso.daos.ClientDAO;
+import com.udemy.curso.daos.PaymentDAO;
 import com.udemy.curso.daos.ProductDAO;
+import com.udemy.curso.daos.ShopOrderDAO;
 import com.udemy.curso.daos.StateDAO;
 import com.udemy.curso.daos.enums.ClientType;
+import com.udemy.curso.daos.enums.PaymentStatus;
 import com.udemy.curso.domain.Address;
 import com.udemy.curso.domain.Category;
 import com.udemy.curso.domain.City;
 import com.udemy.curso.domain.Client;
+import com.udemy.curso.domain.Payment;
+import com.udemy.curso.domain.PaymentWithCard;
+import com.udemy.curso.domain.PaymentWithCheck;
 import com.udemy.curso.domain.Product;
+import com.udemy.curso.domain.ShopOrder;
 import com.udemy.curso.domain.State;
 
 @SpringBootApplication
@@ -36,6 +44,12 @@ public class CursoudemyApplication implements CommandLineRunner {
 	private ClientDAO clientDao;
 	@Autowired
 	private AddressDAO addressDao;
+	@Autowired
+	private ShopOrderDAO shopOrderDao;
+	@Autowired
+	private PaymentDAO paymentDao;
+	
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursoudemyApplication.class, args);
@@ -85,6 +99,21 @@ public class CursoudemyApplication implements CommandLineRunner {
 		clientDao.saveAll(Arrays.asList(cli1));
 		addressDao.saveAll(Arrays.asList(ad1, ad2));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		ShopOrder ord1 = new ShopOrder(null, sdf.parse("30/09/2017 10:32"), cli1, ad1);
+		ShopOrder ord2 = new ShopOrder(null, sdf.parse("10/10/2017 19:35"), cli1, ad2);
+		
+		Payment paym1 = new PaymentWithCard(null, PaymentStatus.DONE, ord1, 6);
+		ord1.setPayment(paym1);
+		
+		Payment paym2 = new PaymentWithCheck(null, PaymentStatus.WAITING, ord2, sdf.parse("20/10/2017 00:00"), null);
+		ord2.setPayment(paym2);
+		
+		cli1.getOrders().addAll(Arrays.asList(ord1, ord2));
+		
+		shopOrderDao.saveAll(Arrays.asList(ord1, ord2));
+		paymentDao.saveAll(Arrays.asList(paym1, paym2));
 	}
 
 }
