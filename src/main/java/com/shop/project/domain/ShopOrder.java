@@ -2,6 +2,8 @@ package com.shop.project.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,6 +34,8 @@ public class ShopOrder implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="OrderAdressId")
 	private Address deliverAddress;
+	
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public ShopOrder() {
 		
@@ -83,6 +87,14 @@ public class ShopOrder implements Serializable{
 
 	public void setDeliverAddress(Address deliverAddress) {
 		this.deliverAddress = deliverAddress;
+	}
+	
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
 	}
 
 	@Override

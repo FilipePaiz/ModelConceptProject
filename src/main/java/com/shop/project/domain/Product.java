@@ -2,7 +2,9 @@ package com.shop.project.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,8 @@ public class Product implements Serializable {
 		inverseJoinColumns = @JoinColumn(name = "categoryId")
 	)
 	private List<Category> categories = new ArrayList<>();
+	
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public Product() {
 		
@@ -75,6 +79,14 @@ public class Product implements Serializable {
 	public void setCategories(List<Category> category) {
 		this.categories = category;
 	}
+	
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
+	}
 
 	@Override
 	public int hashCode() {
@@ -99,7 +111,5 @@ public class Product implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }
