@@ -12,6 +12,7 @@ import com.shop.project.daos.AddressDAO;
 import com.shop.project.daos.CategoryDAO;
 import com.shop.project.daos.CityDAO;
 import com.shop.project.daos.ClientDAO;
+import com.shop.project.daos.OrderItemDAO;
 import com.shop.project.daos.PaymentDAO;
 import com.shop.project.daos.ProductDAO;
 import com.shop.project.daos.ShopOrderDAO;
@@ -22,6 +23,7 @@ import com.shop.project.domain.Address;
 import com.shop.project.domain.Category;
 import com.shop.project.domain.City;
 import com.shop.project.domain.Client;
+import com.shop.project.domain.OrderItem;
 import com.shop.project.domain.Payment;
 import com.shop.project.domain.PaymentWithCard;
 import com.shop.project.domain.PaymentWithCheck;
@@ -48,7 +50,8 @@ public class CursoudemyApplication implements CommandLineRunner {
 	private ShopOrderDAO shopOrderDao;
 	@Autowired
 	private PaymentDAO paymentDao;
-	
+	@Autowired
+	private OrderItemDAO orderItemDao;
 	
 
 	public static void main(String[] args) {
@@ -114,6 +117,20 @@ public class CursoudemyApplication implements CommandLineRunner {
 		
 		shopOrderDao.saveAll(Arrays.asList(ord1, ord2));
 		paymentDao.saveAll(Arrays.asList(paym1, paym2));
+		
+		OrderItem oi1 = new OrderItem(ord1, p1, 0.00, 1, 2000.00);
+		OrderItem oi2 = new OrderItem(ord1, p3, 0.00, 2, 80.00);
+		OrderItem oi3 = new OrderItem(ord2, p2, 100.00, 1, 800.00);
+		
+		ord1.getItems().addAll(Arrays.asList(oi1, oi2));
+		ord2.getItems().addAll(Arrays.asList(oi3));
+		
+		p1.getItems().addAll(Arrays.asList(oi1));
+		p2.getItems().addAll(Arrays.asList(oi3));
+		p3.getItems().addAll(Arrays.asList(oi2));
+		
+		orderItemDao.saveAll(Arrays.asList(oi1,oi2,oi3));
+		
 	}
 
 }

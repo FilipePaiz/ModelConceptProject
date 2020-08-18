@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -35,6 +36,7 @@ public class ShopOrder implements Serializable{
 	@JoinColumn(name="OrderAdressId")
 	private Address deliverAddress;
 	
+	@OneToMany(mappedBy="id.order")
 	private Set<OrderItem> items = new HashSet<>();
 	
 	public ShopOrder() {
