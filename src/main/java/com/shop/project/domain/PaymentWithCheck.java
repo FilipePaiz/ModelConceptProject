@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.shop.project.daos.enums.PaymentStatus;
 
 @Entity
@@ -11,7 +12,9 @@ public class PaymentWithCheck extends Payment {
 	
 	private static final long serialVersionUID = 1L;
 
+	@JsonFormat(pattern="dd/MM/yyy")
 	private Date limitDate;
+	@JsonFormat(pattern="dd/MM/yyy")
 	private Date paymentDate;
 
 	public PaymentWithCheck() {
