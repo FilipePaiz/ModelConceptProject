@@ -21,4 +21,9 @@ public class CategoryService {
 				"Item not found! Id: " + id + ", Type: " + Category.class.getName()));
 		
 	}
+	
+	public Category insert(Category cat) {
+		cat.setId(null); // just in case
+		return dao.save(cat);
+	}
 }
