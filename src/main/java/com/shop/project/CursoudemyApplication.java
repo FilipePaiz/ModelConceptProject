@@ -63,6 +63,11 @@ public class CursoudemyApplication implements CommandLineRunner {
 		
 		Category cat1 = new Category(null, "Computadores");
 		Category cat2 = new Category(null, "Monitores");
+		Category cat3 = new Category(null, "Cadeiras Gaming");
+		Category cat4 = new Category(null, "Periféricos");
+		Category cat5 = new Category(null, "Hardware");
+		Category cat6 = new Category(null, "Mobilidade");
+		Category cat7 = new Category(null, "Armazenamento");
 		
 		Product p1 = new Product(null, "LeNovo 2020", 2000d);
 		Product p2 = new Product(null, "AOC 2019", 400d);
@@ -75,7 +80,7 @@ public class CursoudemyApplication implements CommandLineRunner {
 		p2.getCategories().addAll(Arrays.asList(cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		
-		categoryDao.saveAll(Arrays.asList(cat1, cat2));
+		categoryDao.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		productDao.saveAll(Arrays.asList(p1, p2, p3));
 		
 		State st1 = new State(null, "Texas");
