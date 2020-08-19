@@ -1,5 +1,6 @@
 package com.shop.project.controllers;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.shop.project.domain.Client;
 import com.shop.project.dto.ClientDTO;
+import com.shop.project.dto.ClientFullDTO;
 import com.shop.project.services.ClientService;
 
 @RestController
@@ -34,9 +37,21 @@ public class ClientController {
 		return ResponseEntity.ok().body(cli);
 	}
 	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> createCategory(@Valid @RequestBody ClientFullDTO cliDTO){
+		
+		Client cli = service.fromDTO(cliDTO);
+		cli = service.insert(cli);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(cli.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+	}
+	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> updateClient(@Valid @RequestBody ClientDTO catDTO, @PathVariable Integer id){
-		Client cli = service.fromDTO(catDTO);
+	public ResponseEntity<Void> updateClient(@Valid @RequestBody ClientDTO cliDTO, @PathVariable Integer id){
+		Client cli = service.fromDTO(cliDTO);
 		
 		cli.setId(id);
 		
