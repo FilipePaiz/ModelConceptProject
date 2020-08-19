@@ -22,7 +22,7 @@ public class CategoryController {
 	private CategoryService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Category> find(@PathVariable Integer id) {
+	public ResponseEntity<Category> findCategory(@PathVariable Integer id) {
 		
 		Category cat = service.find(id);
 		
@@ -44,6 +44,15 @@ public class CategoryController {
 		cat.setId(id);
 		
 		cat = service.update(cat);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity<Category> deleteCategory(@PathVariable Integer id) {
+		
+		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}
