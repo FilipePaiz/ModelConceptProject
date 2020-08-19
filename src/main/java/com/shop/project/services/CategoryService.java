@@ -35,10 +35,15 @@ public class CategoryService {
 	}
 	
 	public Category update(Category cat) {
-		find(cat.getId());
-		return dao.save(cat);
+		Category newCat = find(cat.getId());
+		updateData(newCat, cat);
+		return dao.save(newCat);
 	}
 	
+	private void updateData(Category newCat, Category cat) {
+		newCat.setName(cat.getName());	
+	}
+
 	public void delete(Integer id) {
 		
 		find(id);
