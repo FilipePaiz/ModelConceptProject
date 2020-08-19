@@ -1,6 +1,8 @@
 package com.shop.project.controllers;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.shop.project.domain.Category;
+import com.shop.project.dto.CategoryDTO;
 import com.shop.project.services.CategoryService;
 
 @RestController
@@ -55,5 +58,15 @@ public class CategoryController {
 		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll() {
+		
+		List<Category> catList = service.findAll();
+		
+		List<CategoryDTO> dtoList = catList.stream().map(cat -> new CategoryDTO(cat)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(dtoList);
 	}
 }
