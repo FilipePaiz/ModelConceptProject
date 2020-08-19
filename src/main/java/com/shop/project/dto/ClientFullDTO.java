@@ -2,22 +2,46 @@ package com.shop.project.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.shop.project.services.validation.ClientInsert;
+
+@ClientInsert
 public class ClientFullDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="the field can't be empty")
+	@Length(min=5, max=120, message="The size need to be between 5 and 120 characters")
 	private String name;
-	private String email;
-	private String idCard;
-	private Integer type;
 	
+	@NotEmpty(message="the field can't be empty")
+	@Email(message="Invalid email")
+	private String email;
+	
+	@NotEmpty(message="the field can't be empty")
+	private String idCard;
+	
+	private Integer type;
+
+	@NotEmpty(message="the field can't be empty")
 	private String county;
+	
+	@NotEmpty(message="the field can't be empty")
 	private String number;
+	
 	private String floor;
 	private String neighborhood;
+	
+	@NotEmpty(message="the field can't be empty")
 	private String postalCode;
 	
+	@NotEmpty(message="the field can't be empty")
 	private String phoneOne;
+	
 	private String phoneTwo;
 	private String phoneThree;
 	
