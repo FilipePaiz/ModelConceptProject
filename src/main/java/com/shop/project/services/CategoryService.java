@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.project.daos.CategoryDAO;
 import com.shop.project.domain.Category;
+import com.shop.project.dto.CategoryDTO;
 import com.shop.project.services.exceptions.DataIntegrityException;
 import com.shop.project.services.exceptions.ObjectNotFoundException;
 
@@ -57,5 +58,9 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageReq = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return dao.findAll(pageReq);
+	}
+	
+	public Category fromDTO(CategoryDTO catDTO) {
+		return new Category(catDTO.getId(), catDTO.getName());
 	}
 }
