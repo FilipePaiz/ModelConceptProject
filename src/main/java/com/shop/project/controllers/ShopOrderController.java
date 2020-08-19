@@ -18,9 +18,9 @@ public class ShopOrderController {
 	private ShopOrderService service;
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<ShopOrder> find(@PathVariable Integer id) {
 		
-		ShopOrder cat = service.search(id);
+		ShopOrder cat = service.find(id);
 		
 		return ResponseEntity.ok().body(cat);
 	}

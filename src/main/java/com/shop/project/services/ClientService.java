@@ -15,7 +15,7 @@ public class ClientService {
 	@Autowired
 	private ClientDAO dao;
 	
-	public Client search(Integer id) {
+	public Client find(Integer id) {
 		Optional<Client> cat = dao.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException(
 				"Item not found! Id: " + id + ", Type: " + Client.class.getName()));

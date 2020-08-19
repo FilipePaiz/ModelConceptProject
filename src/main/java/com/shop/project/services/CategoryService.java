@@ -15,7 +15,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryDAO dao;
 	
-	public Category search(Integer id) {
+	public Category find(Integer id) {
 		Optional<Category> cat = dao.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException(
 				"Item not found! Id: " + id + ", Type: " + Category.class.getName()));
@@ -24,6 +24,11 @@ public class CategoryService {
 	
 	public Category insert(Category cat) {
 		cat.setId(null); // just in case
+		return dao.save(cat);
+	}
+	
+	public Category update(Category cat) {
+		find(cat.getId());
 		return dao.save(cat);
 	}
 }

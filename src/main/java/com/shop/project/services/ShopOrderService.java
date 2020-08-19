@@ -15,7 +15,7 @@ public class ShopOrderService {
 	@Autowired
 	private ShopOrderDAO dao;
 	
-	public ShopOrder search(Integer id) {
+	public ShopOrder find(Integer id) {
 		Optional<ShopOrder> cat = dao.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException(
 				"Item not found! Id: " + id + ", Type: " + ShopOrder.class.getName()));
