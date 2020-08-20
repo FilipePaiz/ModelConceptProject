@@ -109,7 +109,7 @@ public class DBService {
 		stateDao.saveAll(Arrays.asList(st1, st2));
 		cityDao.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Client cli1 = new Client(null, "André", "andre@gmail.com", "123456789", ClientType.INDIVIDUALPERSON);
+		Client cli1 = new Client(null, "Filipe", "dev.java.git@gmail.com", "123456789", ClientType.INDIVIDUALPERSON);
 		cli1.getPhone().addAll(Arrays.asList("147882369", "963852741"));
 		
 		Address ad1 = new Address(null, "Eevee Street", "300", "Ap 303", "Garden", "1345678", cli1, c1);
