@@ -9,11 +9,10 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.udemy</groupId>
-	<artifactId>cursoudemy</artifactId>
+	<groupId>com.shop.project</groupId>
+	<artifactId>shopproject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cursoudemy</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>11</java.version>
