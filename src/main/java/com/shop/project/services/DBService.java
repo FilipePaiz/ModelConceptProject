@@ -1,12 +1,11 @@
-package com.shop.project;
+package com.shop.project.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Service;
 
 import com.shop.project.daos.AddressDAO;
 import com.shop.project.daos.CategoryDAO;
@@ -31,8 +30,8 @@ import com.shop.project.domain.Product;
 import com.shop.project.domain.ShopOrder;
 import com.shop.project.domain.State;
 
-@SpringBootApplication
-public class CursoudemyApplication implements CommandLineRunner {
+@Service
+public class DBService {
 	
 	@Autowired
 	private CategoryDAO categoryDao;	
@@ -52,15 +51,8 @@ public class CursoudemyApplication implements CommandLineRunner {
 	private PaymentDAO paymentDao;
 	@Autowired
 	private OrderItemDAO orderItemDao;
-	
 
-	public static void main(String[] args) {
-		SpringApplication.run(CursoudemyApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		
+	public void InstantiateTestDatabase() throws ParseException {
 		Category cat1 = new Category(null, "Computadores");
 		Category cat2 = new Category(null, "Monitores");
 		Category cat3 = new Category(null, "Cadeiras Gaming");
@@ -156,7 +148,5 @@ public class CursoudemyApplication implements CommandLineRunner {
 		p3.getItems().addAll(Arrays.asList(oi2));
 		
 		orderItemDao.saveAll(Arrays.asList(oi1,oi2,oi3));
-		
 	}
-
 }
