@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.shop.project.domain.Category;
 import com.shop.project.domain.ShopOrder;
-import com.shop.project.dto.CategoryDTO;
 import com.shop.project.services.ShopOrderService;
 
 @RestController
