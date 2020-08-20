@@ -37,6 +37,9 @@ public class ShopOrderService {
 	@Autowired
 	private ClientService clientService;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public ShopOrder find(Integer id) {
 		Optional<ShopOrder> cat = dao.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException(
@@ -67,7 +70,7 @@ public class ShopOrderService {
 			oi.setOrder(order);
 		}
 		orderItemDao.saveAll(order.getItems());
-		System.out.println(order);
+		emailService.sendOrderConfirmationEmail(order);
 		return order;
 		
 	}
