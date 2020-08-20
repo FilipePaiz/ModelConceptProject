@@ -72,16 +72,37 @@ public class CursoudemyApplication implements CommandLineRunner {
 		Product p1 = new Product(null, "LeNovo 2020", 2000d);
 		Product p2 = new Product(null, "AOC 2019", 400d);
 		Product p3 = new Product(null, "HP 2018", 1400d);
+		Product p4 = new Product(null, "Mesa Gaming", 500d);
+		Product p5 = new Product(null, "Headset", 140d);
+		Product p6 = new Product(null, "RAM 16GB", 75d);
+		Product p7 = new Product(null, "Alpha Gamer", 180d);
+		Product p8 = new Product(null, "Xiaomi", 300d);
+		Product p9 = new Product(null, "Samsung 500GB", 50d);
+		Product p10 = new Product(null, "Water Cooler Asus", 49d);
+		Product p11 = new Product(null, "Processador Intel Pentium", 59d);
 		
 		cat1.getProducts().addAll(Arrays.asList(p1, p3));
 		cat2.getProducts().addAll(Arrays.asList(p2));
+		cat3.getProducts().addAll(Arrays.asList(p4, p7));
+		cat4.getProducts().addAll(Arrays.asList(p5));
+		cat5.getProducts().addAll(Arrays.asList(p6, p10, p11));
+		cat6.getProducts().addAll(Arrays.asList(p8));
+		cat7.getProducts().addAll(Arrays.asList(p9));
 		
 		p1.getCategories().addAll(Arrays.asList(cat1));
 		p2.getCategories().addAll(Arrays.asList(cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
+		p4.getCategories().addAll(Arrays.asList(cat3));
+		p5.getCategories().addAll(Arrays.asList(cat4));
+		p6.getCategories().addAll(Arrays.asList(cat5));
+		p7.getCategories().addAll(Arrays.asList(cat3));
+		p8.getCategories().addAll(Arrays.asList(cat6));
+		p9.getCategories().addAll(Arrays.asList(cat7));
+		p10.getCategories().addAll(Arrays.asList(cat5));
+		p11.getCategories().addAll(Arrays.asList(cat5));
 		
 		categoryDao.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		productDao.saveAll(Arrays.asList(p1, p2, p3));
+		productDao.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		
 		State st1 = new State(null, "Texas");
 		State st2 = new State(null, "Califórnia");
