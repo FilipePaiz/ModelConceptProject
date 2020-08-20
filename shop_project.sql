@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `shop_project`
 --
-CREATE DATABASE IF NOT EXISTS `heroku_1214ac8f82c2e9b` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `heroku_1214ac8f82c2e9b`;
+CREATE DATABASE IF NOT EXISTS `heroku_81dca3fb2356f49`;
+USE `heroku_81dca3fb2356f49`;
 
 -- --------------------------------------------------------
 
@@ -39,7 +39,7 @@ CREATE TABLE `address` (
   `postal_code` varchar(255) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
   `client_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `address`
@@ -59,7 +59,7 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `category`
@@ -85,7 +85,7 @@ CREATE TABLE `city` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `state_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `city`
@@ -109,7 +109,7 @@ CREATE TABLE `client` (
   `id_card` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `client`
@@ -131,7 +131,7 @@ CREATE TABLE `order_item` (
   `quantity` int(11) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `order_item`
@@ -152,7 +152,7 @@ DROP TABLE IF EXISTS `payment`;
 CREATE TABLE `payment` (
   `order_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `payment`
@@ -172,7 +172,7 @@ DROP TABLE IF EXISTS `payment_with_card`;
 CREATE TABLE `payment_with_card` (
   `card_number` int(11) DEFAULT NULL,
   `order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `payment_with_card`
@@ -192,7 +192,7 @@ CREATE TABLE `payment_with_check` (
   `limit_date` datetime DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
   `order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `payment_with_check`
@@ -211,7 +211,7 @@ DROP TABLE IF EXISTS `phone`;
 CREATE TABLE `phone` (
   `client_id` int(11) NOT NULL,
   `phone` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `phone`
@@ -232,7 +232,7 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `product`
@@ -261,7 +261,7 @@ DROP TABLE IF EXISTS `product_category`;
 CREATE TABLE `product_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `product_category`
@@ -292,7 +292,7 @@ CREATE TABLE `shop_order` (
   `time_stamp` datetime DEFAULT NULL,
   `client_id` int(11) DEFAULT NULL,
   `order_adress_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `shop_order`
@@ -312,7 +312,7 @@ DROP TABLE IF EXISTS `state`;
 CREATE TABLE `state` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB;
 
 --
 -- Extraindo dados da tabela `state`

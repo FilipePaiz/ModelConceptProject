@@ -34,6 +34,9 @@ public class ShopOrderService {
 	@Autowired
 	private OrderItemDAO orderItemDao;
 	
+	@Autowired
+	private ClientService clientService;
+	
 	public ShopOrder find(Integer id) {
 		Optional<ShopOrder> cat = dao.findById(id);
 		return cat.orElseThrow(() -> new ObjectNotFoundException(
@@ -45,6 +48,7 @@ public class ShopOrderService {
 	public ShopOrder insert(ShopOrder order) {
 		order.setId(null);
 		order.setTimeStamp(new Date());
+		order.setClient(clientService.find(order.getClient().getId()));
 		order.getPayment().setState(PaymentStatus.WAITING);
 		order.getPayment().setOrder(order);
 		
@@ -58,11 +62,12 @@ public class ShopOrderService {
 		
 		for(OrderItem oi : order.getItems()) {
 			oi.setDiscount(0.0);
-			oi.setPrice(productService.find(oi.getProduct().getId()).getPrice());
+			oi.setProduct(productService.find(oi.getProduct().getId()));
+			oi.setPrice(oi.getProduct().getPrice());
 			oi.setOrder(order);
 		}
 		orderItemDao.saveAll(order.getItems());
-		
+		System.out.println(order);
 		return order;
 		
 	}

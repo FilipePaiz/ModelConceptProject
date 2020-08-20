@@ -1,6 +1,8 @@
 package com.shop.project.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -110,6 +112,23 @@ public class OrderItem implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "PT"));
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduct().getName());
+		builder.append(", Qty: ");
+		builder.append(getQuantity());
+		builder.append(", Unit Price: ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", SubTotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		
+		return builder.toString();
 	}
 	
 	

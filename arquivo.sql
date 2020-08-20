@@ -19,7 +19,7 @@
 -- Table structure for table `address`
 --
 
-USE `heroku_81dca3fb2356f49`;
+--USE `heroku_81dca3fb2356f49`;
 
 DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -117,7 +117,7 @@ CREATE TABLE `client` (
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_bfgjs3fem0hmjhvih80158x29` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4; ROW_FORMAT = DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
