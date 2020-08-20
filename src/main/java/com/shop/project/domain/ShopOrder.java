@@ -54,6 +54,16 @@ public class ShopOrder implements Serializable{
 		this.client = client;
 		this.deliverAddress = deliverAddress;
 	}
+	
+	public double getTotalValue() {
+		double sum = 0.0;
+		
+		for(OrderItem ip : items) {
+			sum = sum + ip.getSubTotal();
+		}
+		
+		return sum;
+	}
 
 	public Integer getId() {
 		return id;
