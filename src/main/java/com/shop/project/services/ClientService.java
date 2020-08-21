@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shop.project.daos.AddressDAO;
@@ -29,6 +30,9 @@ public class ClientService {
 	
 	@Autowired
 	private AddressDAO addressDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	public Client find(Integer id) {
 		Optional<Client> cli = dao.findById(id);
@@ -80,11 +84,11 @@ public class ClientService {
 	}
 	
 	public Client fromDTO(ClientDTO cliDTO) {
-		return new Client(cliDTO.getId(), cliDTO.getName(), cliDTO.getEmail(), null, null);
+		return new Client(cliDTO.getId(), cliDTO.getName(), cliDTO.getEmail(), null, null, null);
 	}
 	
 	public Client fromDTO(ClientFullDTO cliDTO) {
-		 Client client = new Client(null, cliDTO.getName(), cliDTO.getEmail(), cliDTO.getIdCard(), ClientType.toEnum(cliDTO.getType()));
+		 Client client = new Client(null, cliDTO.getName(), cliDTO.getEmail(), cliDTO.getIdCard(), ClientType.toEnum(cliDTO.getType()), pe.encode(cliDTO.getPassword()));
 		 City city = new City(cliDTO.getCityId(), null, null);
 		 Address address = new Address(null, cliDTO.getCounty(), cliDTO.getNumber(), cliDTO.getFloor(), cliDTO.getNeighborhood(), cliDTO.getPostalCode(), client, city);
 		 

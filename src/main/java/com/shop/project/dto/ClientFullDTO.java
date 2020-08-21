@@ -26,6 +26,9 @@ public class ClientFullDTO implements Serializable{
 	private String idCard;
 	
 	private Integer type;
+	
+	@NotEmpty(message="the field can't be empty")
+	private String password;
 
 	@NotEmpty(message="the field can't be empty")
 	private String county;
@@ -99,6 +102,14 @@ public class ClientFullDTO implements Serializable{
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getCounty() {
