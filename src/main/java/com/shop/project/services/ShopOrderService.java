@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +14,12 @@ import com.shop.project.daos.OrderItemDAO;
 import com.shop.project.daos.PaymentDAO;
 import com.shop.project.daos.ShopOrderDAO;
 import com.shop.project.daos.enums.PaymentStatus;
+import com.shop.project.domain.Client;
 import com.shop.project.domain.OrderItem;
 import com.shop.project.domain.PaymentWithCheck;
 import com.shop.project.domain.ShopOrder;
+import com.shop.project.security.UserSS;
+import com.shop.project.services.exceptions.AuthorizationException;
 import com.shop.project.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -73,5 +79,17 @@ public class ShopOrderService {
 		emailService.sendOrderConfirmationHtmlEmail(order);
 		return order;
 		
+	}
+	
+	public Page<ShopOrder> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user= UserService.authenticated();
+		
+		if(user == null) {
+			throw new AuthorizationException("Access not allowed");
+		}
+		
+		PageRequest pageReq = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Client client = clientService.find(user.getId());
+		return dao.findByClient(client, pageReq);
 	}
 }
