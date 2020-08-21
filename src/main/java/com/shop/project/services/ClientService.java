@@ -14,11 +14,14 @@ import org.springframework.stereotype.Service;
 import com.shop.project.daos.AddressDAO;
 import com.shop.project.daos.ClientDAO;
 import com.shop.project.daos.enums.ClientType;
+import com.shop.project.daos.enums.Profile;
 import com.shop.project.domain.Address;
 import com.shop.project.domain.City;
 import com.shop.project.domain.Client;
 import com.shop.project.dto.ClientDTO;
 import com.shop.project.dto.ClientFullDTO;
+import com.shop.project.security.UserSS;
+import com.shop.project.services.exceptions.AuthorizationException;
 import com.shop.project.services.exceptions.DataIntegrityException;
 import com.shop.project.services.exceptions.ObjectNotFoundException;
 
@@ -35,6 +38,12 @@ public class ClientService {
 	private BCryptPasswordEncoder pe;
 	
 	public Client find(Integer id) {
+		UserSS user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access not allowed");
+		}
+		
 		Optional<Client> cli = dao.findById(id);
 		return cli.orElseThrow(() -> new ObjectNotFoundException(
 				"Item not found! Id: " + id + ", Type: " + Client.class.getName()));
