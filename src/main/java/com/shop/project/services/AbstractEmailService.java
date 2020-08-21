@@ -2,8 +2,16 @@ package com.shop.project.services;
 
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.shop.project.domain.ShopOrder;
 
@@ -11,6 +19,12 @@ public abstract class AbstractEmailService implements EmailService {
 
 	@Value("${default.sender}")
 	private String sender;
+	
+	@Autowired
+	private TemplateEngine templateEngine;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	@Override
 	public void sendOrderConfirmationEmail(ShopOrder order) {
@@ -26,5 +40,35 @@ public abstract class AbstractEmailService implements EmailService {
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(order.toString());
 		return sm;
+	}
+	
+	protected String htmlFromTemplateOrder(ShopOrder order) {
+		Context context = new Context();
+		context.setVariable("order", order);
+		
+		return templateEngine.process("email/emailConfirmation", context);
+				
+	}
+	
+	@Override
+	 public void sendOrderConfirmationHtmlEmail(ShopOrder order) {		
+		try {
+			MimeMessage mm; mm = prepareMimeMessageFromOrder(order);
+			sendHtmlEmail(mm);
+		} catch (MessagingException e) {
+			sendOrderConfirmationEmail(order);
+		}
+	}
+
+	private MimeMessage prepareMimeMessageFromOrder(ShopOrder order) throws MessagingException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
+		mmh.setTo(order.getClient().getEmail());
+		mmh.setFrom(sender);
+		mmh.setSubject("Order confirmed! Code: " + order.getId());
+		mmh.setSentDate(new Date(System.currentTimeMillis()));
+		mmh.setText(htmlFromTemplateOrder(order), true);
+		
+		return mimeMessage;
 	}
 }

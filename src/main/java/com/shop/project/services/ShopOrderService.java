@@ -70,7 +70,7 @@ public class ShopOrderService {
 			oi.setOrder(order);
 		}
 		orderItemDao.saveAll(order.getItems());
-		emailService.sendOrderConfirmationEmail(order);
+		emailService.sendOrderConfirmationHtmlEmail(order);
 		return order;
 		
 	}
