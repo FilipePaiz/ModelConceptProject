@@ -19,6 +19,7 @@ import com.shop.project.daos.ShopOrderDAO;
 import com.shop.project.daos.StateDAO;
 import com.shop.project.daos.enums.ClientType;
 import com.shop.project.daos.enums.PaymentStatus;
+import com.shop.project.daos.enums.Profile;
 import com.shop.project.domain.Address;
 import com.shop.project.domain.Category;
 import com.shop.project.domain.City;
@@ -116,13 +117,19 @@ public class DBService {
 		Client cli1 = new Client(null, "Filipe", "dev.java.git@gmail.com", "123456789", ClientType.INDIVIDUALPERSON, pe.encode("123"));
 		cli1.getPhone().addAll(Arrays.asList("147882369", "963852741"));
 		
+		Client cli2 = new Client(null, "Andreia", "lazuliigamingquests@gmail.com", "963258741", ClientType.INDIVIDUALPERSON, pe.encode("123"));
+		cli2.addProfile(Profile.ADMIN);
+		cli2.getPhone().addAll(Arrays.asList("741369852", "963258147"));
+		
 		Address ad1 = new Address(null, "Eevee Street", "300", "Ap 303", "Garden", "1345678", cli1, c1);
 		Address ad2 = new Address(null, "Kel Street", "105", "Ap 800", "Center", "741852", cli1, c2);
+		Address ad3 = new Address(null, "Avenida Badjoraz", "105", null, "Center", "2851-369", cli2, c2);
 		
 		cli1.getAddresses().addAll(Arrays.asList(ad1, ad2));
+		cli2.getAddresses().addAll(Arrays.asList(ad3));
 		
-		clientDao.saveAll(Arrays.asList(cli1));
-		addressDao.saveAll(Arrays.asList(ad1, ad2));
+		clientDao.saveAll(Arrays.asList(cli1, cli2));
+		addressDao.saveAll(Arrays.asList(ad1, ad2, ad3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
