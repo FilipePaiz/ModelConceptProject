@@ -59,16 +59,6 @@ public class Client implements Serializable{
 	public Client() {
 		addProfile(Profile.CLIENT);
 	}
-	
-	private String imageURL;
-
-	public String getImageURL() {
-		return imageURL;
-	}
-
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
-	}
 
 	public Client(Integer id, String name, String email, String idCard, ClientType type, String password) {
 		super();

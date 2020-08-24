@@ -39,6 +39,14 @@ public class ClientController {
 		return ResponseEntity.ok().body(cli);
 	}
 	
+	@RequestMapping(value="/email",method=RequestMethod.GET)
+	public ResponseEntity<Client> find(@RequestParam(value="value") String email) {
+		
+		Client cli = service.findByEmail(email);
+		
+		return ResponseEntity.ok().body(cli);
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> createCategory(@Valid @RequestBody ClientFullDTO cliDTO){
 		

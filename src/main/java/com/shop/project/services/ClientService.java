@@ -1,10 +1,12 @@
 package com.shop.project.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +43,16 @@ public class ClientService {
 
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imgService;
 
+	@Value("${img.prefix.client.profile}")
+	private String imagePrefix;
+	
+	@Value("${img.profile.size}")
+	private int imageSize;
+	
 	public Client find(Integer id) {
 		UserSS user = UserService.authenticated();
 
@@ -53,6 +64,22 @@ public class ClientService {
 		return cli.orElseThrow(
 				() -> new ObjectNotFoundException("Item not found! Id: " + id + ", Type: " + Client.class.getName()));
 
+	}
+	
+	public Client findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		
+		if (user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Access not allowed");
+		}
+		
+		Client client = dao.findByEmail(email);
+		
+		if(client == null) {
+			throw new ObjectNotFoundException("Item not found! Id: " + user.getId() + ", Type: " + Client.class.getName());
+		}
+		
+		return client;
 	}
 
 	public Client insert(Client cli) {
@@ -128,12 +155,12 @@ public class ClientService {
 			throw new AuthorizationException("Access not allowed");
 		}
 		
-		URI uri = s3Service.uploadFile(multipartFile);
+		BufferedImage jgpImage = imgService.getJpgImageFromFile(multipartFile);
+		jgpImage = imgService.cropASquare(jgpImage);
+		jgpImage = imgService.resize(jgpImage, imageSize);
+		String fileName = imagePrefix + user.getId() + ".jpg";
 		
-		Client cli = find(user.getId());
-		cli.setImageURL(uri.toString());
-		dao.save(cli);
-		
-		return uri;
+		return s3Service.uploadFile(imgService.getInputStream(jgpImage, "jpg"), fileName, "image");
 	}
+	
 }
